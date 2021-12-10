@@ -2,7 +2,7 @@
 
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +22,5 @@ Route::get('/', function () {
 Route::get('admin', function(){
     return view('admin.dashboard');
 });
+Auth::routes(['register'=>false]);
+//Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
