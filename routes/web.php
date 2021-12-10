@@ -18,6 +18,6 @@ Auth::routes(['register'=>false]);
 Route::get('/', [App\Http\Controllers\PagesController::class, 'index']);
 //Grupos de rutas
 Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function(){
-    Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index']);
+    Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
     Route::get('posts', [App\Http\Controllers\Admin\PostController::class, 'index'])->name('admin.posts.index');
 });

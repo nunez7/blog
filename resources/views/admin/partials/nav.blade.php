@@ -3,15 +3,15 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item">
-            <a href="{{url('/admin')}}" class="nav-link">
+            <a href="{{route('dashboard')}}" class="nav-link {{request()->is('admin') ? 'active':''}}">
                 <i class="nav-icon fas fa-home"></i>
                 <p>
                     Inicio
                 </p>
             </a>
         </li>
-        <li class="nav-item menu-close">
-            <a href="#" class="nav-link">
+        <li class="nav-item {{request()->is('admin/posts') ? 'menu-open':'menu-close'}} ">
+            <a href="#" class="nav-link {{request()->is('admin/posts') ? 'active':''}}">
                 <i class="nav-icon fas fa-bars"></i>
                 <p>
                     Blog
@@ -20,7 +20,7 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{route('admin.posts.index')}}" class="nav-link">
+                    <a href="{{route('admin.posts.index')}}" class="nav-link {{request()->is('admin/posts') ? 'active':''}}">
                         <i class="fas fa-table nav-icon"></i>
                         <p>Ver todos los posts</p>
                     </a>
