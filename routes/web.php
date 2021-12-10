@@ -16,10 +16,8 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes(['register'=>false]);
 
 Route::get('/', [App\Http\Controllers\PagesController::class, 'index']);
-Route::get('home', [App\Http\Controllers\PagesController::class, 'index']);
 //Grupos de rutas
 Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function(){
+    Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index']);
     Route::get('posts', [App\Http\Controllers\Admin\PostController::class, 'index'])->name('admin.posts.index');
 });
-
-Route::get('admin', [App\Http\Controllers\HomeController::class, 'index']);

@@ -10,7 +10,7 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item menu-open">
+        <li class="nav-item menu-close">
             <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-bars"></i>
                 <p>
@@ -32,6 +32,18 @@
                     </a>
                 </li>
             </ul>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <p>
+                    Cerrar sesión
+                </p>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         </li>
     </ul>
 </nav>
