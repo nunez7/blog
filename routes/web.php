@@ -14,13 +14,19 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Auth::routes(['register'=>false]);
+
 Route::get('/', function () {
+    $posts = Post::latest('published_at')->get();
+    return view('welcome', compact('posts'));
+});
+
+Route::get('home', function () {
     $posts = Post::latest('published_at')->get();
     return view('welcome', compact('posts'));
 });
 
 Route::get('admin', function(){
     return view('admin.dashboard');
-});
-Auth::routes(['register'=>false]);
+})->middleware('auth');
 //Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
