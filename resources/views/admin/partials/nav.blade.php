@@ -3,7 +3,7 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{url('/admin')}}" class="nav-link">
                 <i class="nav-icon fas fa-home"></i>
                 <p>
                     Inicio
@@ -20,7 +20,7 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('admin.posts.index')}}" class="nav-link">
                         <i class="fas fa-table nav-icon"></i>
                         <p>Ver todos los posts</p>
                     </a>
