@@ -17,5 +17,9 @@ Auth::routes(['register'=>false]);
 
 Route::get('/', [App\Http\Controllers\PagesController::class, 'index']);
 Route::get('home', [App\Http\Controllers\PagesController::class, 'index']);
+//Grupos de rutas
+Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function(){
+    Route::get('posts', [App\Http\Controllers\Admin\PostController::class, 'index']);
+});
 
 Route::get('admin', [App\Http\Controllers\HomeController::class, 'index']);
