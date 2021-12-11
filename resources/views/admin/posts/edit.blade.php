@@ -3,13 +3,13 @@
 <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-            <h1 class="m-0">Crear publicación</h1>
+            <h1 class="m-0">Modificar publicación</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Inicio</a></li>
                 <li class="breadcrumb-item"><a href="{{route('admin.posts.index')}}">Posts</a></li>
-                <li class="breadcrumb-item active">Crear</li>
+                <li class="breadcrumb-item active">Edición</li>
             </ol>
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -18,16 +18,17 @@
 @section('content')
 <div class="card card-primary">
     <div class="card-header">
-        <h3 class="card-title">Crear un nuevo post</h3>
+        <h3 class="card-title">Edición del post</h3>
     </div>
     <div class="card-body">
-        <form action="{{route('admin.posts.store')}}" method="post">
+        <form action="{{route('admin.posts.update', $post)}}" method="post">
             {{csrf_field()}}
+            {{method_field('PUT')}}
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
                         <label for="">Título</label>
-                        <input type="text" class="form-control {{$errors->has('title') ? 'is-invalid':''}}" name="title" value="{{old('title')}}">
+                        <input type="text" class="form-control {{$errors->has('title') ? 'is-invalid':''}}" name="title" value="{{old('title', $post->title)}}">
                         {!! $errors->first('title', '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>
@@ -38,7 +39,7 @@
                             <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
-                            <input type="text" class="form-control datetimepicker-input {{$errors->has('published_at') ? 'is-invalid':''}}" value="{{old('published_at')}}" data-target="#reservationdate" name="published_at" />
+                            <input type="text" class="form-control datetimepicker-input {{$errors->has('published_at') ? 'is-invalid':''}}" value="{{old('published_at',$post->published_at ? $post->published_at->format('m/d/Y'):null)}}" data-target="#reservationdate" name="published_at" />
                         </div>
                     </div>
                 </div>
@@ -48,7 +49,7 @@
                     <div class="form-group">
                         <label for="">Contenido</label>
                         <textarea id="summernote" class="form-control" name="body">
-                        {{old('body')}}
+                        {{old('body', $post->body)}}
               </textarea>
               {!! $errors->first('body', '<span class="help-block">:message</span>') !!}
                     </div>
@@ -58,22 +59,22 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="">Extracto</label>
-                                <textarea class="form-control {{$errors->has('excerpt') ? 'is-invalid':''}}" name="excerpt" id="" cols="30" rows="2" maxlength="300" placeholder="Lo más importante">{{old('excerpt')}}</textarea>
+                                <textarea class="form-control {{$errors->has('excerpt') ? 'is-invalid':''}}" name="excerpt" id="" cols="30" rows="2" maxlength="300" placeholder="Lo más importante">{{old('excerpt', $post->excerpt)}}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <label for="">Categoria</label>
                             <select name="category_id" class="form-control" required="required">
                                 @foreach ($categories as $category)
-                                <option {{old('category_id')==$category->id ? 'selected':''}} value="{{$category->id}}">{{$category->name}}</option>
+                                <option {{old('category_id', $post->category_id)==$category->id ? 'selected':''}} value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-12">
                             <label>Etiquetas</label>
-                            <select class="select2 form-control" multiple="multiple" name="tags[]" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
+                            <select class="select form-control" multiple="multiple" name="tags[]" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
                                 @foreach ($tags as $tag)
-                                <option {{ collect(old('tags'))->contains($tag->id) ? 'selected':''}} value="{{$tag->id}}">{{$tag->name}}</option>
+                                <option {{ collect(old('tags', $post->tags->pluck('id')))->contains($tag->id) ? 'selected':''}} value="{{$tag->id}}">{{$tag->name}}</option>
                                 @endforeach
                             </select>
                             {!! $errors->first('tags', '<span class="help-block">:message</span>') !!}
@@ -112,12 +113,11 @@
 <script>
     //Date picker
     $('#reservationdate').datetimepicker({
-        //defaultDate: new Date(),
         autoclose: true,
         format: 'L'
     });
     $('#summernote').summernote();
-    $('.select2').select2()
+    $('.select').select2()
 </script>
 @endpush
 @endsection
