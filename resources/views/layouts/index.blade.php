@@ -11,16 +11,17 @@
 	<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 	<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+	@stack('scripts')
 </head>
 <body>
 	<div class="preload"></div>
 	<header class="space-inter">
 		<div class="container container-flex space-between">
-			<figure class="logo"><img src="img/logo.png" alt=""></figure>
+			<figure class="logo"><img src="{{asset('img/logo.png')}}" alt=""></figure>
 			<nav class="custom-wrapper" id="menu">
 				<div class="pure-menu"></div>
 				<ul class="container-flex list-unstyled">
-					<li><a href="index.html" class="text-uppercase">Home</a></li>
+					<li><a href="{{url('/')}}" class="text-uppercase">Home</a></li>
 					<li><a href="about.html" class="text-uppercase">About</a></li>
 					<li><a href="archive.html" class="text-uppercase">Archive</a></li>
 					<li><a href="contact.html" class="text-uppercase">Contact</a></li>
@@ -45,7 +46,7 @@
 	<section class="footer">
 		<footer>
 			<div class="container">
-				<figure class="logo"><img src="img/logo.png" alt=""></figure>
+				<figure class="logo"><img src="{{asset('img/logo.png')}}" alt=""></figure>
 				<nav>
 					<ul class="container-flex space-center list-unstyled">
 						<li><a href="index.html" class="text-uppercase c-white">home</a></li>

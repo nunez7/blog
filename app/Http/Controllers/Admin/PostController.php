@@ -16,11 +16,13 @@ class PostController extends Controller
         $posts = Post::all();
         return view('admin.posts.index',  compact('posts'));
     }
+
     public function create(){
         $categories = Category::all();
         $tags = Tag::all();
         return view('admin.posts.create', compact('categories', 'tags'));
     }
+
     public function store(Request $request){
         request()->validate(Post::$rules);
         //dd($request->has($request->published_at));

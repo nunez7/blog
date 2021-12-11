@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes(['register'=>false]);
 
 Route::get('/', [App\Http\Controllers\PagesController::class, 'index']);
+Route::get('blog/{id}',[App\Http\Controllers\PostController::class, 'show']);
 //Grupos de rutas
 Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function(){
     Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
