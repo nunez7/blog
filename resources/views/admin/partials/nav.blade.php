@@ -10,8 +10,8 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item {{request()->is('admin/posts') ? 'menu-open':'menu-close'}} ">
-            <a href="#" class="nav-link {{request()->is('admin/posts') ? 'active':''}}">
+        <li class="nav-item {{request()->is('admin/posts*') ? 'menu-open':'menu-close'}} ">
+            <a href="#" class="nav-link {{request()->is('admin/posts*') ? 'active':''}}">
                 <i class="nav-icon fas fa-bars"></i>
                 <p>
                     Blog
@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('admin.posts.create')}}" class="nav-link {{request()->is('admin/posts/create') ? 'active':''}}">
                         <i class="fas fa-plus nav-icon"></i>
                         <p>Crear post</p>
                     </a>
