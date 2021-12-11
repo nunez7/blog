@@ -4,7 +4,8 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>{{ config('app.name', 'Laravel') }}</title>
+	<title>@yield('meta-title', config('app.name').' | Blog')</title>
+	<meta name="description" content="@yield('meta-description', 'Blog de Zendero')">
 	<link rel="stylesheet" href="{{asset('css/normalize.css')}}">
 	<link rel="stylesheet" href="{{asset('css/framework.css')}}">
 	<link rel="stylesheet" href="{{asset('css/style.css')}}">
