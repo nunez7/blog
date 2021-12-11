@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -28,9 +29,10 @@ class PostController extends Controller
         //dd($request->has($request->published_at));
         $post = new Post();
         $post->title = $request->title;
+        $post->url = Str::slug($request->title);
         $post->body = $request->body;
         $post->excerpt = $request->excerpt;
-        $post->published_at = $request->has($request->published_at) ? Carbon::parse($request->published_at): NULL;
+        $post->published_at = $request->has('published_at') ? Carbon::parse($request->published_at): NULL;
         $post->category_id = $request->category_id;
         $post->save();
         //Guardamos las etiquetas

@@ -19,6 +19,11 @@ class Post extends Model
 		'category_id' => 'required',
 		'tags' => 'required',
     ];
+    
+    //renombrando el campo de busqueda
+    public function getRouteKeyName(){
+        return 'url';
+    }
 
     //post->category->name
     public function category(){

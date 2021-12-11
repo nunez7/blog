@@ -16,7 +16,6 @@
         <div class="image-w-text">
             {!! $post->body !!}
         </div>
-
         <footer class="container-flex space-between">
             <div class="buttons-social-media-share">
                 <ul class="share-buttons list-group list-group-horizontal">
