@@ -22,6 +22,8 @@ class PostController extends Controller
         return view('admin.posts.create', compact('categories', 'tags'));
     }
     public function store(Request $request){
+        request()->validate(Post::$rules);
+        
         $post = new Post();
         $post->title = $request->title;
         $post->body = $request->body;

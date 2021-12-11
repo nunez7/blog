@@ -27,7 +27,8 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         <label for="">Título</label>
-                        <input type="text" class="form-control" name="title" required>
+                        <input type="text" class="form-control {{$errors->has('title') ? 'is-invalid':''}}" name="title" value="{{old('title')}}">
+                        {!! $errors->first('title', '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -37,7 +38,7 @@
                             <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
-                            <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="published_at" required />
+                            <input type="text" class="form-control datetimepicker-input {{$errors->has('published_at') ? 'is-invalid':''}}" value="{{old('published_at')}}" data-target="#reservationdate" name="published_at" />
                         </div>
                     </div>
                 </div>
@@ -46,9 +47,10 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         <label for="">Contenido</label>
-                        <textarea id="summernote" class="form-control" name="body" requited>
-                Place <em>some</em> <u>text</u> <strong>here</strong>
+                        <textarea id="summernote" class="form-control" name="body">
+                        {{old('body')}}
               </textarea>
+              {!! $errors->first('body', '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -56,24 +58,25 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="">Extracto</label>
-                                <textarea class="form-control" name="excerpt" id="" cols="30" rows="2" maxlength="300" required placeholder="Lo más importante"></textarea>
+                                <textarea class="form-control {{$errors->has('excerpt') ? 'is-invalid':''}}" name="excerpt" id="" cols="30" rows="2" maxlength="300" placeholder="Lo más importante">{{old('excerpt')}}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <label for="">Categoria</label>
                             <select name="category_id" class="form-control" required="required">
                                 @foreach ($categories as $category)
-                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                <option {{old('category_id')==$category->id ? 'selected':''}} value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-12">
                             <label>Etiquetas</label>
-                            <select class="select2" multiple="multiple" required name="tags[]" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
+                            <select class="select2 form-control" multiple="multiple" name="tags[]" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
                                 @foreach ($tags as $tag)
-                                <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                <option {{ collect(old('tags'))->contains($tag->id) ? 'selected':''}} value="{{$tag->id}}">{{$tag->name}}</option>
                                 @endforeach
                             </select>
+                            {!! $errors->first('tags', '<span class="help-block">:message</span>') !!}
                         </div>
                         <div class="col-md-12 mt-2">
                             <div class="form-group">
