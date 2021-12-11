@@ -45,22 +45,53 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         <label for="">Contenido</label>
-                        <textarea class="form-control" name="body" id="" cols="30" rows="5" required placeholder="Ingresa el contenido completo de la publicación"></textarea>
+                        <textarea id="summernote" class="form-control" name="body" requited>
+                Place <em>some</em> <u>text</u> <strong>here</strong>
+              </textarea>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="">Extracto</label>
-                        <textarea class="form-control" name="excerpt" id="" cols="30" rows="2" maxlength="300" required placeholder="Lo más importante"></textarea>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">Extracto</label>
+                                <textarea class="form-control" name="excerpt" id="" cols="30" rows="2" maxlength="300" required placeholder="Lo más importante"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="">Categoria</label>
+                            <select name="category_id" class="form-control" required="required">
+                                @foreach ($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Etiquetas</label>
+                            <select class="select2" multiple="multiple" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
+                                @foreach ($tags as $tag)
+                                <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
-
 @push('styles')
 <!-- daterange picker -->
+<link rel="stylesheet" href="{{asset('adminlte/plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+<!-- summernote -->
+<link rel="stylesheet" href="{{asset('adminlte/plugins/summernote/summernote-bs4.min.css')}}">
+<!-- Select2 -->
 <link rel="stylesheet" href="{{asset('adminlte/plugins/select2/css/select2.min.css')}}">
 <link rel="stylesheet" href="{{asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @endpush
@@ -70,12 +101,17 @@
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{asset('adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
 <script src="{{asset('adminlte/plugins/daterangepicker/daterangepicker.js')}}"></script>
-<!-- AdminLTE App -->
+<!-- Summernote -->
+<script src="{{asset('adminlte/plugins/summernote/summernote-bs4.min.js')}}"></script>
+<!-- Select2 -->
+<script src="{{asset('adminlte/plugins/select2/js/select2.full.min.js')}}"></script>
 <script>
     //Date picker
     $('#reservationdate').datetimepicker({
         format: 'L'
     });
+    $('#summernote').summernote();
+    $('.select2').select2()
 </script>
 @endpush
 @endsection
