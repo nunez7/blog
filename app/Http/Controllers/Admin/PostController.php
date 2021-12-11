@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -18,5 +20,19 @@ class PostController extends Controller
         $categories = Category::all();
         $tags = Tag::all();
         return view('admin.posts.create', compact('categories', 'tags'));
+    }
+    public function store(Request $request){
+        $post = new Post();
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->excerpt = $request->excerpt;
+        $post->published_at = Carbon::parse($request->published_at);
+        $post->category_id = $request->category_id;
+        $post->save();
+        //Guardamos las etiquetas
+        $post->tags()->attach($request->tags);
+        //Retornamos al form
+        $mensaje = 'Tu publicación ha sido creada';
+        return back()->with(compact('mensaje'));
     }
 }

@@ -21,7 +21,8 @@
         <h3 class="card-title">Crear un nuevo post</h3>
     </div>
     <div class="card-body">
-        <form action="" method="post">
+        <form action="{{route('admin.posts.store')}}" method="post">
+            {{csrf_field()}}
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
@@ -33,10 +34,10 @@
                     <div class="form-group">
                         <label>Fecha de publicación:</label>
                         <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                            <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="published_at" required />
                             <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
+                            <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="published_at" required />
                         </div>
                     </div>
                 </div>
@@ -68,7 +69,7 @@
                         </div>
                         <div class="col-md-12">
                             <label>Etiquetas</label>
-                            <select class="select2" multiple="multiple" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
+                            <select class="select2" multiple="multiple" required name="tags" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
                                 @foreach ($tags as $tag)
                                 <option value="{{$tag->id}}">{{$tag->name}}</option>
                                 @endforeach
@@ -108,6 +109,8 @@
 <script>
     //Date picker
     $('#reservationdate').datetimepicker({
+        defaultDate: new Date(),
+        autoclose: true,
         format: 'L'
     });
     $('#summernote').summernote();

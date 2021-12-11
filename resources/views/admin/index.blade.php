@@ -184,6 +184,13 @@
     </div>
     <!-- Main content -->
     <div class="content">
+      <!--Mensajes de sesion -->
+      @if (session()->has('mensaje'))
+        <div class="alert alert-success">
+          {{session('mensaje')}}
+        </div>
+      @endif
+
       <div class="container-fluid pt-2">
          @yield('content')
         <!-- /.row -->

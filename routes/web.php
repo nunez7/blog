@@ -21,4 +21,5 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function(){
     Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
     Route::get('posts', [App\Http\Controllers\Admin\PostController::class, 'index'])->name('admin.posts.index');
     Route::get('posts/create', [App\Http\Controllers\Admin\PostController::class, 'create'])->name('admin.posts.create');
+    Route::post('posts/store', [App\Http\Controllers\Admin\PostController::class, 'store'])->name('admin.posts.store');
 });
