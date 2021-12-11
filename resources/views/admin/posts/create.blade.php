@@ -112,7 +112,7 @@
 <script>
     //Date picker
     $('#reservationdate').datetimepicker({
-        defaultDate: new Date(),
+        //defaultDate: new Date(),
         autoclose: true,
         format: 'L'
     });

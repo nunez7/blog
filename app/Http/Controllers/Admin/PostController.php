@@ -23,12 +23,12 @@ class PostController extends Controller
     }
     public function store(Request $request){
         request()->validate(Post::$rules);
-        
+        //dd($request->has($request->published_at));
         $post = new Post();
         $post->title = $request->title;
         $post->body = $request->body;
         $post->excerpt = $request->excerpt;
-        $post->published_at = Carbon::parse($request->published_at);
+        $post->published_at = $request->has($request->published_at) ? Carbon::parse($request->published_at): NULL;
         $post->category_id = $request->category_id;
         $post->save();
         //Guardamos las etiquetas
