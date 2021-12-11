@@ -37,6 +37,9 @@
                     <td>{{$post->title}}</td>
                     <td>{{$post->excerpt}}</td>
                     <td>
+                        <a href="#" class="btn btn-xs btn-light">
+                            <i class="far fa-eye"></i>
+                        </a>
                         <a href="#" class="btn btn-xs btn-info">
                             <i class="far fa-edit"></i>
                         </a>
@@ -52,26 +55,26 @@
     <!-- /.card-body -->
 </div>
 @push('styles')
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{{asset('adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-  <link rel="stylesheet" href="{{asset('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<!-- DataTables -->
+<link rel="stylesheet" href="{{asset('adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet" href="{{asset('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 @endpush
 @push('scripts')
 <!-- DataTables  & Plugins -->
 <script src="{{asset('adminlte/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script>
-  $(function () {
-    $('#posts-table').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
+    $(function() {
+        $('#posts-table').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
     });
-  });
 </script>
 @endpush
 @endsection

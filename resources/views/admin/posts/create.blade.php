@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-md-12">
                             <label>Etiquetas</label>
-                            <select class="select2" multiple="multiple" required name="tags" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
+                            <select class="select2" multiple="multiple" required name="tags[]" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
                                 @foreach ($tags as $tag)
                                 <option value="{{$tag->id}}">{{$tag->name}}</option>
                                 @endforeach
