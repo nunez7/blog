@@ -96,30 +96,35 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="">Contenido embebido (iframe)</label>
+                        <textarea id="editor" class="form-control" name="iframe" rows="2" placeholder="Ingresa contenido embebido de audio o vídeo">
+                        {{old('iframe', $post->iframe)}}
+                        </textarea>
+                        {!! $errors->first('iframe', '<span class="help-block">:message</span>') !!}
+                    </div>
+                </div>
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="">Imagen</label>
                         <div class="dropzone"></div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <label>Etiquetas</label>
+                    <select class="select form-control" multiple="multiple" name="tags[]" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
+                        @foreach ($tags as $tag)
+                        <option {{ collect(old('tags', $post->tags->pluck('id')))->contains($tag->id) ? 'selected':''}} value="{{$tag->id}}">{{$tag->name}}</option>
+                        @endforeach
+                    </select>
+                    {!! $errors->first('tags', '<span class="help-block">:message</span>') !!}
+                </div>
                 <div class="col-md-4">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label>Etiquetas</label>
-                            <select class="select form-control" multiple="multiple" name="tags[]" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
-                                @foreach ($tags as $tag)
-                                <option {{ collect(old('tags', $post->tags->pluck('id')))->contains($tag->id) ? 'selected':''}} value="{{$tag->id}}">{{$tag->name}}</option>
-                                @endforeach
-                            </select>
-                            {!! $errors->first('tags', '<span class="help-block">:message</span>') !!}
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block">Guardar</button>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Guardar</button>
                     </div>
                 </div>
             </div>

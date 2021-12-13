@@ -6,16 +6,18 @@
     @if ($post->photos->count()===1)
     <figure><img src="{{url($post->photos->first()->url)}}" alt="" class="img-responsive img-fluid"></figure>
     @elseif($post->photos->count()>1)
-        <div class="gallery-photos masonry">
-            @foreach ($post->photos->take(4) as $photo)
-            <figure class="gallery-image">
-               @if($loop->iteration===4)
-               <div class="overlay">{{$post->photos->count()}}</div>
-               @endif
-               <img src="{{url($photo->url)}}" class="img-responsive" alt="">
-            </figure>
-            @endforeach
-        </div>
+    <div class="gallery-photos masonry">
+        @foreach ($post->photos->take(4) as $photo)
+        <figure class="gallery-image">
+            @if($loop->iteration===4)
+            <div class="overlay">{{$post->photos->count()}}</div>
+            @endif
+            <img src="{{url($photo->url)}}" class="img-responsive" alt="">
+        </figure>
+        @endforeach
+    </div>
+    @elseif($post->iframe)
+        {!! $post->iframe !!}
     @endif
     <div class="content-post">
         <header class="container-flex space-between">

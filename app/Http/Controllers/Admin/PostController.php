@@ -55,6 +55,7 @@ class PostController extends Controller
         request()->validate(Post::$rules);
         $post->title = $request->title;
         $post->url = Str::slug($request->title);
+        $post->iframe = $request->iframe;
         $post->body = $request->body;
         $post->excerpt = $request->excerpt;
         $post->published_at = $request->has('published_at') ? Carbon::parse($request->published_at): NULL;
