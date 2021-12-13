@@ -80,9 +80,9 @@ header nav li a:hover {
 .masonry .gallery-image {
     display: inline-block;
     width: 100%;
-    margin-bottom: 20px;
-    padding: 4px;
-    border: 1px solid #000;
+    /*margin-bottom: 20px;
+    padding: 4px;*/
+    overflow: hidden;
 }
 cite,
 .cite {
@@ -288,4 +288,22 @@ a.btn-bar {
 	list-style-type: none;
 	float: left;
 	margin-right: 10px;
+}
+.overlay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 36%;
+    position: absolute;
+    color: white;
+    font-size: 30px;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.gallery-photos{
+    overflow: hidden;
+}
+
+.carousel-inner .item img{
+    width: 100%;
 }

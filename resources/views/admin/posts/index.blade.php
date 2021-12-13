@@ -40,7 +40,7 @@
                     <td>{{$post->title}}</td>
                     <td>{{$post->excerpt}}</td>
                     <td>
-                        <a href="#" class="btn btn-xs btn-light">
+                        <a href="{{route('posts.show', $post)}}" target="_blank" class="btn btn-xs btn-light">
                             <i class="far fa-eye"></i>
                         </a>
                         <a href="{{url('admin/posts/edit/'.$post->id)}}" class="btn btn-xs btn-info">
