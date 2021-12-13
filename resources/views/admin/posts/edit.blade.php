@@ -50,8 +50,8 @@
                         <label for="">Contenido</label>
                         <textarea id="summernote" class="form-control" name="body">
                         {{old('body', $post->body)}}
-              </textarea>
-              {!! $errors->first('body', '<span class="help-block">:message</span>') !!}
+                        </textarea>
+                        {!! $errors->first('body', '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -70,6 +70,18 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="">Imagen</label>
+                        <div class="dropzone"></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
                         <div class="col-md-12">
                             <label>Etiquetas</label>
                             <select class="select form-control" multiple="multiple" name="tags[]" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
@@ -79,7 +91,7 @@
                             </select>
                             {!! $errors->first('tags', '<span class="help-block">:message</span>') !!}
                         </div>
-                        <div class="col-md-12 mt-2">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-block">Guardar</button>
                             </div>
@@ -99,6 +111,8 @@
 <!-- Select2 -->
 <link rel="stylesheet" href="{{asset('adminlte/plugins/select2/css/select2.min.css')}}">
 <link rel="stylesheet" href="{{asset('adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+<!--Dropzone -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
 @push('scripts')
 <!-- InputMask -->
@@ -110,6 +124,8 @@
 <script src="{{asset('adminlte/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('adminlte/plugins/select2/js/select2.full.min.js')}}"></script>
+<!--Dropzone -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js" integrity="sha512-U2WE1ktpMTuRBPoCFDzomoIorbOyUv0sP8B+INA3EzNAhehbzED1rOJg6bCqPf/Tuposxb5ja/MAUnC8THSbLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     //Date picker
     $('#reservationdate').datetimepicker({
@@ -117,7 +133,22 @@
         format: 'L'
     });
     $('#summernote').summernote();
-    $('.select').select2()
+    $('.select').select2();
+    var myDropzone = new Dropzone('.dropzone', {
+        acceptedFiles: 'image/*',
+        url: '{{url("/admin/posts/{$post->id}/photos")}}',
+        maxFilesieze: 2,
+        paramName: 'photo',
+        headers:{
+            'X-CSRF-TOKEN': '{{csrf_token()}}'
+        },
+        dictDefaultMessage: 'Arrastra las imagenes aquí para subirlas'
+    });
+    myDropzone.on('error', function(file, res){
+        //console.log(res.errors.photo[0]);
+        $('.dz-error-message:last > span').text(res.errors.photo[0]);
+    });
+    Dropzone.autoDiscover = false;
 </script>
 @endpush
 @endsection
