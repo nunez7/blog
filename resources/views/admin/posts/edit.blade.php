@@ -16,6 +16,30 @@
 </div><!-- /.container-fluid -->
 @endsection
 @section('content')
+@if($post->photos->count()>0)
+<div class="card card-primary">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    @foreach ($post->photos as $photo)
+                    <div class="col-md-2">
+                        <form action="{{route('admin.photos.destroy', $photo)}}" method="post">
+                            {{method_field('DELETE')}}
+                            {{csrf_field()}}
+                            <button class="btn btn-xs btn-danger position-absolute">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <img src="{{url($photo->url)}}" alt="" class="img-fluid">
+                        </form>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 <div class="card card-primary">
     <div class="card-header">
         <h3 class="card-title">Edición del post</h3>
@@ -59,7 +83,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="">Extracto</label>
-                                <textarea class="form-control {{$errors->has('excerpt') ? 'is-invalid':''}}" name="excerpt" id="" cols="30" rows="2" maxlength="300" placeholder="Lo más importante">{{old('excerpt', $post->excerpt)}}</textarea>
+                                <textarea class="form-control {{$errors->has('excerpt') ? 'is-invalid':''}}" name="excerpt" id="" cols="30" rows="4" maxlength="300" placeholder="Lo más importante">{{old('excerpt', $post->excerpt)}}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -132,19 +156,21 @@
         autoclose: true,
         format: 'L'
     });
-    $('#summernote').summernote();
+    $('#summernote').summernote({
+        height: 150
+    });
     $('.select').select2();
     var myDropzone = new Dropzone('.dropzone', {
         acceptedFiles: 'image/*',
         url: '{{url("/admin/posts/{$post->id}/photos")}}',
         maxFilesieze: 2,
         paramName: 'photo',
-        headers:{
+        headers: {
             'X-CSRF-TOKEN': '{{csrf_token()}}'
         },
         dictDefaultMessage: 'Arrastra las imagenes aquí para subirlas'
     });
-    myDropzone.on('error', function(file, res){
+    myDropzone.on('error', function(file, res) {
         //console.log(res.errors.photo[0]);
         $('.dz-error-message:last > span').text(res.errors.photo[0]);
     });

@@ -29,4 +29,15 @@ class PhotosController extends Controller
 
         return Storage::url($photoUrl);
     }
+
+    public function destroy(Photo $photo){
+        //Eliminamos la foto en la DB
+        $photo->delete();
+        //Eliminamos la foto de la ruta
+        $photoPath = str_replace('storage', 'public', $photo->url);
+        Storage::delete($photoPath);
+        //retornamos mensaje
+        $mensaje = 'Foto eliminada';
+        return back()->with(compact('mensaje'));
+    }
 }
