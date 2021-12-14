@@ -91,3 +91,18 @@
         </div>
     </div>
 </div>
+@push('scripts')
+<script>
+    //Necesario para el envio de datos y abrir el modal si hay error
+    if(window.location.hash==="#create"){
+        $("#md-addpost").modal('show');
+    }
+    $("#md-addpost").on('hide.bs.modal', function(){
+        window.location.hash="#";
+    });
+    $("#md-addpost").on('shown.bs.modal', function(){
+        $("#post-title").focus();
+        window.location.hash="#create";
+    });
+</script>
+@endpush

@@ -62,7 +62,9 @@
     </div>
     <!-- /.card-body -->
 </div>
-@include('admin.partials.form-post')
+@unless (request()->is('admin/posts/*'))
+    @include('admin.partials.form-post')
+@endunless
 @push('styles')
 <!-- DataTables -->
 <link rel="stylesheet" href="{{asset('adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -89,21 +91,7 @@
 <script src="{{asset('adminlte/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('adminlte/plugins/select2/js/select2.full.min.js')}}"></script>
-@unless (request()->is('admin/posts/*'))
-<script>
-    //Necesario para el envio de datos y abrir el modal si hay error
-    if(window.location.hash==="#create"){
-        $("#md-addpost").modal('show');
-    }
-    $("#md-addpost").on('hide.bs.modal', function(){
-        window.location.hash="#";
-    });
-    $("#md-addpost").on('shown.bs.modal', function(){
-        $("#post-title").focus();
-        window.location.hash="#create";
-    });
-</script>
-@endunless
+@stack('scripts')
 <script>
     $(function() {
         $('#reservationdateC').datetimepicker({
