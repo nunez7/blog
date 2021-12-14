@@ -46,4 +46,14 @@ class PostController extends Controller
         $mensaje = 'Tu publicación ha sido actualizada';
         return back()->with(compact('mensaje'));
     }
+
+    public function destroy(Post $post){
+        //Eliminar referencias
+        //return $post;
+        //$post->photos()->delete();
+
+        $post->delete();
+        $mensaje = 'Tu publicación ha sido eliminada';
+        return back()->with(compact('mensaje'));
+    }
 }

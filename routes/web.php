@@ -27,6 +27,8 @@ Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function(){
     Route::post('posts/store', [App\Http\Controllers\Admin\PostController::class, 'store'])->name('admin.posts.store');
     Route::get('posts/edit/{id}', [App\Http\Controllers\Admin\PostController::class, 'edit'])->name('admin.posts.edit');
     Route::put('posts/{post}', [App\Http\Controllers\Admin\PostController::class, 'update'])->name('admin.posts.update');
+    Route::delete('posts/{post}', [App\Http\Controllers\Admin\PostController::class, 'destroy'])->name('admin.posts.destroy');
+    
     Route::post('posts/{id}/photos', [App\Http\Controllers\Admin\PhotosController::class, 'store'])->name('admin.posts.photos.store');
     Route::delete('photos/{photo}', [App\Http\Controllers\Admin\PhotosController::class, 'destroy'])->name('admin.photos.destroy');
 });

@@ -17,74 +17,98 @@ class Post extends Model
     protected $dates = ['published_at'];
 
     static $rules = [
-		'title' => 'required',
-		'excerpt' => 'required',
-		'body' => 'required',
-		'category_id' => 'required',
-		'tags' => 'required',
+        'title' => 'required',
+        'excerpt' => 'required',
+        'body' => 'required',
+        'category_id' => 'required',
+        'tags' => 'required',
     ];
-    
+
+    //Cuando se elimine un post se eliminan sus etiquetas primero, las fotos
+    //y al final su registro
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($post) {
+            $post->tags()->detach();
+            $post->photos->each(function ($photo) {
+                $photo->delete();
+            });
+        });
+    }
+
     //renombrando el campo de busqueda
-    public function getRouteKeyName(){
+    public function getRouteKeyName()
+    {
         return 'url';
     }
 
     //Mutators
-    public function setTitleAttribute($title){
+    public function setTitleAttribute($title)
+    {
         $this->attributes['title'] = $title;
         $this->attributes['url'] = str_slug($title);
     }
 
-    public function setPublishAtAttribute($published_at){
-        $this->attributes['published_at'] = $published_at ? Carbon::parse($published_at): NULL;
+    public function setPublishAtAttribute($published_at)
+    {
+        $this->attributes['published_at'] = $published_at ? Carbon::parse($published_at) : NULL;
     }
 
-    public function setCategoryIdAttribute($category_id){
-        $this->attributes['category_id'] = Category::find($category_id) 
-        ? $category_id : Category::create(['name'=>$category_id])->id;
+    public function setCategoryIdAttribute($category_id)
+    {
+        $this->attributes['category_id'] = Category::find($category_id)
+            ? $category_id : Category::create(['name' => $category_id])->id;
     }
 
-    public function attachTags($tags){
-        $tagIds = collect($tags)->map(function($tag){
-            return Tag::find($tag) ? 
-            $tag : 
-            Tag::create(
-                ['name'=>$tag]
-            )->id;
+    public function attachTags($tags)
+    {
+        $tagIds = collect($tags)->map(function ($tag) {
+            return Tag::find($tag) ?
+                $tag :
+                Tag::create(
+                    ['name' => $tag]
+                )->id;
         });
         //Guardamos las etiquetas
         return $this->tags()->attach($tagIds);
     }
 
-    public function syncTags($tags){
-        $tagIds = collect($tags)->map(function($tag){
-            return Tag::find($tag) ? 
-            $tag : 
-            Tag::create(
-                ['name'=>$tag]
-            )->id;
+    public function syncTags($tags)
+    {
+        $tagIds = collect($tags)->map(function ($tag) {
+            return Tag::find($tag) ?
+                $tag :
+                Tag::create(
+                    ['name' => $tag]
+                )->id;
         });
         //Guardamos las etiquetas
         return $this->tags()->sync($tagIds);
     }
 
     //post->category->name
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function tags(){
+    public function tags()
+    {
         return $this->belongsToMany(Tag::class);
     }
 
-    public function photos(){
+    public function photos()
+    {
         return $this->hasMany(Photo::class);
     }
 
     /** Query scopes */
-    public function scopePublished($query){
+    public function scopePublished($query)
+    {
         $query->whereNotNull('published_at')
-        ->where('published_at', '<=', Carbon::now())
-        ->latest('published_at');
+            ->where('published_at', '<=', Carbon::now())
+            ->latest('published_at');
     }
 }

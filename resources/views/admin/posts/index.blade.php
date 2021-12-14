@@ -46,9 +46,14 @@
                         <a href="{{url('admin/posts/edit/'.$post->id)}}" class="btn btn-xs btn-info">
                             <i class="far fa-edit"></i>
                         </a>
-                        <a href="#" class="btn btn-xs btn-danger">
-                            <i class="fas fa-times"></i>
-                        </a>
+                        <form action="{{route('admin.posts.destroy', $post)}}" method="post" class="d-inline">
+                            {{csrf_field()}}
+                            {{method_field('DELETE')}}
+                            <button type="submit" class="btn btn-xs btn-danger"
+                            onclick="return confirm('¿Estás seguro de querer eliminar está publicación?')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach
@@ -95,7 +100,7 @@
             height: 150
         });
         $('.select').select2({
-            tags:true
+            tags: true
         });
         $('#posts-table').DataTable({
             "paging": true,
