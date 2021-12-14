@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+    //Atributos a considerarse cuando se actualizan los datos
+    protected $fillable = [
+        'title', 'body', 'iframe', 'excerpt', 'published_at', 'category_id'
+    ];
 
     protected $dates = ['published_at'];
 
@@ -29,6 +33,39 @@ class Post extends Model
     public function setTitleAttribute($title){
         $this->attributes['title'] = $title;
         $this->attributes['url'] = str_slug($title);
+    }
+
+    public function setPublishAtAttribute($published_at){
+        $this->attributes['published_at'] = $published_at ? Carbon::parse($published_at): NULL;
+    }
+
+    public function setCategoryIdAttribute($category_id){
+        $this->attributes['category_id'] = Category::find($category_id) 
+        ? $category_id : Category::create(['name'=>$category_id])->id;
+    }
+
+    public function attachTags($tags){
+        $tagIds = collect($tags)->map(function($tag){
+            return Tag::find($tag) ? 
+            $tag : 
+            Tag::create(
+                ['name'=>$tag]
+            )->id;
+        });
+        //Guardamos las etiquetas
+        return $this->tags()->attach($tagIds);
+    }
+
+    public function syncTags($tags){
+        $tagIds = collect($tags)->map(function($tag){
+            return Tag::find($tag) ? 
+            $tag : 
+            Tag::create(
+                ['name'=>$tag]
+            )->id;
+        });
+        //Guardamos las etiquetas
+        return $this->tags()->sync($tagIds);
     }
 
     //post->category->name

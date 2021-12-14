@@ -20,28 +20,12 @@ class PostController extends Controller
         return view('admin.posts.index',  compact('posts', 'categories', 'tags'));
     }
 
-    /*public function create(){
-        $categories = Category::all();
-        $tags = Tag::all();
-        return view('admin.posts.create', compact('categories', 'tags'));
-    }*/
-
     public function store(Request $request){
         request()->validate(Post::$rules);
         //dd($request->has($request->published_at));
-        $post = new Post();
-        $post->title = $request->title;
-        //$post->url = Str::slug($request->title);
-        $post->body = $request->body;
-        $post->iframe = $request->iframe;
-        $post->excerpt = $request->excerpt;
-        $post->published_at = $request->has('published_at') ? Carbon::parse($request->published_at): NULL;
-        $cat = $request->category_id;
-        $post->category_id = Category::find($cat) 
-        ? $cat : Category::create(['name'=>$cat])->id;
-        $post->save();
+        $post = Post::create($request->all());
         //Guardamos las etiquetas
-        $post->tags()->attach($request->tags);
+        $post->attachTags($request->tags);
         //Retornamos al form
         $mensaje = 'Tu publicación ha sido creada';
         return back()->with(compact('mensaje'));
@@ -56,29 +40,8 @@ class PostController extends Controller
 
     public function update(Post $post, Request $request){
         request()->validate(Post::$rules);
-        $post->title = $request->title;
-        //Se comento porque el mutator sustituye todo
-        //$post->url = Str::slug($request->title);
-        $post->iframe = $request->iframe;
-        $post->body = $request->body;
-        $post->excerpt = $request->excerpt;
-        $post->published_at = $request->has('published_at') ? Carbon::parse($request->published_at): NULL;
-        //Creando categorias si no estan
-        $cat = $request->category_id;
-        $post->category_id = Category::find($cat) 
-        ? $cat : Category::create(['name'=>$cat])->id;
-        $post->save();
-
-        $tags = [];
-        foreach($request->tags as $tag){
-            $tags[] = Tag::find($tag) ? 
-            $tag : 
-            Tag::create(
-                ['name'=>$tag]
-            )->id;
-        }
-        //Guardamos las etiquetas
-        $post->tags()->sync($tags);
+        $post->update($request->all());
+        $post->syncTags($request->tags);
         //Retornamos al form
         $mensaje = 'Tu publicación ha sido actualizada';
         return back()->with(compact('mensaje'));
