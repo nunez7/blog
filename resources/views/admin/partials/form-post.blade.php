@@ -7,14 +7,14 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('admin.posts.store')}}" method="post">
+            <form action="{{route('admin.posts.store', '#create')}}" method="post">
                 {{csrf_field()}}
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="">Título</label>
-                                <input type="text" required class="form-control {{$errors->has('title') ? 'is-invalid':''}}" name="title" value="{{old('title')}}">
+                                <input type="text" required class="form-control {{$errors->has('title') ? 'is-invalid':''}}" id="post-title" name="title" value="{{old('title')}}" autofocus>
                                 {!! $errors->first('title', '<span class="help-block">:message</span>') !!}
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                                     <div class="form-group">
                                         <label for="">Contenido embebido (iframe)</label>
                                         <textarea id="editor" class="form-control" name="iframe" rows="2" placeholder="Ingresa contenido embebido de audio o vídeo">
-                                        {{old('iframe', $post->iframe)}}
+                                        {{old('iframe')}}
                                         </textarea>
                                         {!! $errors->first('iframe', '<span class="help-block">:message</span>') !!}
                                     </div>

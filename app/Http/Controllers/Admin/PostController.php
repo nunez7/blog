@@ -28,11 +28,11 @@ class PostController extends Controller
         $post->attachTags($request->tags);
         //Retornamos al form
         $mensaje = 'Tu publicación ha sido creada';
-        return back()->with(compact('mensaje'));
+        //return back()->with(compact('mensaje'));
+        return redirect()->route('admin.posts.edit', compact('post', 'mensaje'));
     }
 
-    public function edit($id){
-        $post = Post::find($id);
+    public function edit(Post $post){
         $categories = Category::all();
         $tags = Tag::all();
         return view('admin.posts.edit', compact('post','categories', 'tags'));

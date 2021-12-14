@@ -43,7 +43,7 @@
                         <a href="{{route('posts.show', $post)}}" target="_blank" class="btn btn-xs btn-light">
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="{{url('admin/posts/edit/'.$post->id)}}" class="btn btn-xs btn-info">
+                        <a href="{{route('admin.posts.edit', $post)}}" class="btn btn-xs btn-info">
                             <i class="far fa-edit"></i>
                         </a>
                         <form action="{{route('admin.posts.destroy', $post)}}" method="post" class="d-inline">
@@ -89,6 +89,21 @@
 <script src="{{asset('adminlte/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('adminlte/plugins/select2/js/select2.full.min.js')}}"></script>
+@unless (request()->is('admin/posts/*'))
+<script>
+    //Necesario para el envio de datos y abrir el modal si hay error
+    if(window.location.hash==="#create"){
+        $("#md-addpost").modal('show');
+    }
+    $("#md-addpost").on('hide.bs.modal', function(){
+        window.location.hash="#";
+    });
+    $("#md-addpost").on('shown.bs.modal', function(){
+        $("#post-title").focus();
+        window.location.hash="#create";
+    });
+</script>
+@endunless
 <script>
     $(function() {
         $('#reservationdateC').datetimepicker({
