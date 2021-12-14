@@ -88,7 +88,7 @@
                         </div>
                         <div class="col-md-12">
                             <label for="">Categoria</label>
-                            <select name="category_id" class="form-control" required="required">
+                            <select name="category_id" class="form-control select" required="required">
                                 @foreach ($categories as $category)
                                 <option {{old('category_id', $post->category_id)==$category->id ? 'selected':''}} value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
@@ -99,7 +99,7 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         <label for="">Contenido embebido (iframe)</label>
-                        <textarea id="editor" class="form-control" name="iframe" rows="2" placeholder="Ingresa contenido embebido de audio o vídeo">
+                        <textarea id="editor" class="form-control" name="iframe" rows="4" placeholder="Ingresa contenido embebido de audio o vídeo">
                         {{old('iframe', $post->iframe)}}
                         </textarea>
                         {!! $errors->first('iframe', '<span class="help-block">:message</span>') !!}
@@ -164,7 +164,9 @@
     $('#summernote').summernote({
         height: 150
     });
-    $('.select').select2();
+    $('.select').select2({
+        tags:true
+    });
     var myDropzone = new Dropzone('.dropzone', {
         acceptedFiles: 'image/*',
         url: '{{url("/admin/posts/{$post->id}/photos")}}',

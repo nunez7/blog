@@ -94,7 +94,9 @@
         $('#summernoteC').summernote({
             height: 150
         });
-        $('.select2C').select2();
+        $('.select').select2({
+            tags:true
+        });
         $('#posts-table').DataTable({
             "paging": true,
             "lengthChange": false,

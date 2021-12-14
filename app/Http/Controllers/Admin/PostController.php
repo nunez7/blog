@@ -36,7 +36,9 @@ class PostController extends Controller
         $post->iframe = $request->iframe;
         $post->excerpt = $request->excerpt;
         $post->published_at = $request->has('published_at') ? Carbon::parse($request->published_at): NULL;
-        $post->category_id = $request->category_id;
+        $cat = $request->category_id;
+        $post->category_id = Category::find($cat) 
+        ? $cat : Category::create(['name'=>$cat])->id;
         $post->save();
         //Guardamos las etiquetas
         $post->tags()->attach($request->tags);
@@ -61,7 +63,10 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->excerpt = $request->excerpt;
         $post->published_at = $request->has('published_at') ? Carbon::parse($request->published_at): NULL;
-        $post->category_id = $request->category_id;
+        //Creando categorias si no estan
+        $cat = $request->category_id;
+        $post->category_id = Category::find($cat) 
+        ? $cat : Category::create(['name'=>$cat])->id;
         $post->save();
         //Guardamos las etiquetas
         $post->tags()->sync($request->tags);

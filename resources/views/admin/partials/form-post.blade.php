@@ -57,31 +57,31 @@
                                         {!! $errors->first('iframe', '<span class="help-block">:message</span>') !!}
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <label for="">Categoria</label>
+                                    <select name="category_id" class="form-control select" required data-placeholder="Selecciona una categoría" style="width: 100%;">
+                                        <option value="">Selecciona ...</option>
+                                        @foreach ($categories as $category)
+                                        <option {{old('category_id')==$category->id ? 'selected':''}} value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <label for="">Categoria</label>
-                            <select name="category_id" class="form-control" required>
-                                @foreach ($categories as $category)
-                                <option {{old('category_id')==$category->id ? 'selected':''}} value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
                         <div class="col-md-8">
                             <label>Etiquetas</label>
-                            <select class="select2C form-control" required multiple="multiple" name="tags[]" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
+                            <select class="select form-control" required multiple="multiple" name="tags[]" data-placeholder="Selecciona una o más etiquetas" style="width: 100%;">
                                 @foreach ($tags as $tag)
                                 <option {{ collect(old('tags'))->contains($tag->id) ? 'selected':''}} value="{{$tag->id}}">{{$tag->name}}</option>
                                 @endforeach
                             </select>
                             {!! $errors->first('tags', '<span class="help-block">:message</span>') !!}
                         </div>
-                    </div>
-                    <div class="row justify-content-end">
-                        <div class="col-md-4 mt-2">
+                        <div class="col-md-4">
                             <div class="form-group">
+                                <label>&nbsp;</label>
                                 <button type="submit" class="btn btn-primary btn-block">Guardar</button>
                             </div>
                         </div>
