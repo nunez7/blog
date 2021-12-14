@@ -25,6 +25,12 @@ class Post extends Model
         return 'url';
     }
 
+    //Mutators
+    public function setTitleAttribute($title){
+        $this->attributes['title'] = $title;
+        $this->attributes['url'] = str_slug($title);
+    }
+
     //post->category->name
     public function category(){
         return $this->belongsTo(Category::class);

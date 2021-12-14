@@ -91,7 +91,9 @@
             autoclose: true,
             format: 'L'
         });
-        $('#summernoteC').summernote();
+        $('#summernoteC').summernote({
+            height: 150
+        });
         $('.select2C').select2();
         $('#posts-table').DataTable({
             "paging": true,

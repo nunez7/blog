@@ -31,8 +31,9 @@ class PostController extends Controller
         //dd($request->has($request->published_at));
         $post = new Post();
         $post->title = $request->title;
-        $post->url = Str::slug($request->title);
+        //$post->url = Str::slug($request->title);
         $post->body = $request->body;
+        $post->iframe = $request->iframe;
         $post->excerpt = $request->excerpt;
         $post->published_at = $request->has('published_at') ? Carbon::parse($request->published_at): NULL;
         $post->category_id = $request->category_id;
@@ -54,7 +55,8 @@ class PostController extends Controller
     public function update(Post $post, Request $request){
         request()->validate(Post::$rules);
         $post->title = $request->title;
-        $post->url = Str::slug($request->title);
+        //Se comento porque el mutator sustituye todo
+        //$post->url = Str::slug($request->title);
         $post->iframe = $request->iframe;
         $post->body = $request->body;
         $post->excerpt = $request->excerpt;

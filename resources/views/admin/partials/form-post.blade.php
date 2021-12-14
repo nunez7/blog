@@ -48,6 +48,15 @@
                                         <textarea required title="Extracto del post" class="form-control {{$errors->has('excerpt') ? 'is-invalid':''}}" name="excerpt" id="" cols="30" rows="2" maxlength="300" placeholder="Lo más importante">{{old('excerpt')}}</textarea>
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="">Contenido embebido (iframe)</label>
+                                        <textarea id="editor" class="form-control" name="iframe" rows="2" placeholder="Ingresa contenido embebido de audio o vídeo">
+                                        {{old('iframe', $post->iframe)}}
+                                        </textarea>
+                                        {!! $errors->first('iframe', '<span class="help-block">:message</span>') !!}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

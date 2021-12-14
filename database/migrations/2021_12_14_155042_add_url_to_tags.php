@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIframeToPost extends Migration
+class AddUrlToTags extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class AddIframeToPost extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->mediumText('iframe')
-            ->after('excerpt')
-            ->nullable(true);
+        Schema::table('tags', function (Blueprint $table) {
+            $table->mediumText('url')
+            ->after('name')
+            ->nullable;
         });
     }
 
@@ -27,7 +27,7 @@ class AddIframeToPost extends Migration
      */
     public function down()
     {
-        Schema::table('post', function (Blueprint $table) {
+        Schema::table('tags', function (Blueprint $table) {
             //
         });
     }

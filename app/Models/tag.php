@@ -10,10 +10,16 @@ class Tag extends Model
     use HasFactory;
 
     public function getRouteKeyName(){
-        return 'name';
+        return 'url';
+    }
+
+    public function setNameAttribute($name){
+        $this->attributes['name'] = $name;
+        $this->attributes['url'] = str_slug($name);
     }
 
     public function posts(){
         return $this->belongsToMany(Post::class);
     }
+
 }
