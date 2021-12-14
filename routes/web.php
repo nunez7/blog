@@ -17,6 +17,7 @@ Auth::routes(['register'=>false]);
 
 Route::get('/', [App\Http\Controllers\PagesController::class, 'index']);
 Route::get('blog/{post}',[App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
+Route::get('categorias/{category}',[App\Http\Controllers\CategoriesController::class, 'show'])->name('categories.show');
 //Grupos de rutas
 Route::group(['prefix'=>'admin', 'middleware'=>'auth'], function(){
     Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
