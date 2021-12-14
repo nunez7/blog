@@ -68,8 +68,17 @@ class PostController extends Controller
         $post->category_id = Category::find($cat) 
         ? $cat : Category::create(['name'=>$cat])->id;
         $post->save();
+
+        $tags = [];
+        foreach($request->tags as $tag){
+            $tags[] = Tag::find($tag) ? 
+            $tag : 
+            Tag::create(
+                ['name'=>$tag]
+            )->id;
+        }
         //Guardamos las etiquetas
-        $post->tags()->sync($request->tags);
+        $post->tags()->sync($tags);
         //Retornamos al form
         $mensaje = 'Tu publicación ha sido actualizada';
         return back()->with(compact('mensaje'));
