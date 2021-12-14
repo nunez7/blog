@@ -30,7 +30,7 @@
                             <button class="btn btn-xs btn-danger position-absolute">
                                 <i class="fas fa-times"></i>
                             </button>
-                            <img src="{{url($photo->url)}}" alt="" class="img-fluid">
+                            <img src="{{url('storage/'.$photo->url)}}" alt="" class="img-fluid">
                         </form>
                     </div>
                     @endforeach
