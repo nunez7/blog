@@ -40,13 +40,13 @@
                     <td>{{$post->title}}</td>
                     <td>{{$post->excerpt}}</td>
                     <td>
-                        <a href="{{route('posts.show', $post)}}" target="_blank" class="btn btn-xs btn-light">
+                        <a href="{{url('blog/'.$post->url)}}" target="_blank" class="btn btn-xs btn-light">
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="{{route('admin.posts.edit', $post)}}" class="btn btn-xs btn-info">
+                        <a href="{{route('admin.posts.edit', $post->id)}}" class="btn btn-xs btn-info">
                             <i class="far fa-edit"></i>
                         </a>
-                        <form action="{{route('admin.posts.destroy', $post)}}" method="post" class="d-inline">
+                        <form action="{{route('admin.posts.destroy', $post->id)}}" method="post" class="d-inline">
                             {{csrf_field()}}
                             {{method_field('DELETE')}}
                             <button type="submit" class="btn btn-xs btn-danger"

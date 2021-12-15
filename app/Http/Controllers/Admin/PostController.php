@@ -24,15 +24,17 @@ class PostController extends Controller
         request()->validate(Post::$rules);
         //dd($request->has($request->published_at));
         $post = Post::create($request->all());
+        $post->url = str_slug($request->title)."-{$post->id}";
+        $post->save();
         //Guardamos las etiquetas
         $post->attachTags($request->tags);
         //Retornamos al form
         $mensaje = 'Tu publicación ha sido creada';
-        //return back()->with(compact('mensaje'));
-        return redirect()->route('admin.posts.edit', compact('post', 'mensaje'));
+        return back()->with(compact('mensaje'));
     }
 
-    public function edit(Post $post){
+    public function edit($id){
+        $post = Post::find($id);
         $categories = Category::all();
         $tags = Tag::all();
         return view('admin.posts.edit', compact('post','categories', 'tags'));
@@ -47,11 +49,11 @@ class PostController extends Controller
         return back()->with(compact('mensaje'));
     }
 
-    public function destroy(Post $post){
+    public function destroy($id){
         //Eliminar referencias
         //return $post;
         //$post->photos()->delete();
-
+        $post = Post::find($id);
         $post->delete();
         $mensaje = 'Tu publicación ha sido eliminada';
         return back()->with(compact('mensaje'));

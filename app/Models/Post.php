@@ -45,11 +45,16 @@ class Post extends Model
     }
 
     //Mutators
-    public function setTitleAttribute($title)
+    /*public function setTitleAttribute($title)
     {
         $this->attributes['title'] = $title;
-        $this->attributes['url'] = str_slug($title);
-    }
+        $url = str_slug($title);
+        $duplicateUrl = Post::where('url', 'LIKE', "{$url}%")->count();
+        if($duplicateUrl){
+            $url .= "-".++$duplicateUrl;
+        }
+        $this->attributes['url'] = $url;
+    }*/
 
     public function setPublishAtAttribute($published_at)
     {
