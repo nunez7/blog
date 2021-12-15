@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['register'=>false]);
 
-Route::get('/', [App\Http\Controllers\PagesController::class, 'index']);
+Route::get('/', [App\Http\Controllers\PagesController::class, 'index'])->name('pages.home');
+Route::get('nosotros', [App\Http\Controllers\PagesController::class, 'about'])->name('pages.about');
+Route::get('archivo', [App\Http\Controllers\PagesController::class, 'archive'])->name('pages.archive');
+Route::get('contacto', [App\Http\Controllers\PagesController::class, 'contact'])->name('pages.contact');
+
 Route::get('blog/{post}',[App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
 Route::get('categorias/{category}',[App\Http\Controllers\CategoriesController::class, 'show'])->name('categories.show');
 Route::get('tags/{tag}',[App\Http\Controllers\TagsController::class, 'show'])->name('tags.show');
