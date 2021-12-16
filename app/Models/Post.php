@@ -109,6 +109,10 @@ class Post extends Model
         return $this->hasMany(Photo::class);
     }
 
+    public function owner(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     /** Query scopes */
     public function scopePublished($query)
     {

@@ -25,6 +25,7 @@ class PostController extends Controller
         //dd($request->has($request->published_at));
         $post = Post::create($request->all());
         $post->url = str_slug($request->title)."-{$post->id}";
+        $post->user_id = auth()->id();
         $post->save();
         //Guardamos las etiquetas
         $post->attachTags($request->tags);
